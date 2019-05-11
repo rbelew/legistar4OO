@@ -1,0 +1,25 @@
+{
+    "development": {
+        "config_id": "development",
+        "node_port": 3000,
+        "hash_secret": "shibboleth",
+        "database": "my-app-db-dev"
+    },
+    "testing": {
+        "config_id": "testing",
+        "hash_secret": "shibboleth",
+        "database": "my-app-db-test"
+    },
+    "staging": {
+        "config_id": "staging",
+        "node_port": 8080,
+        "hash_secret": "shibboleth",
+        "database": "my-app-db-stag"
+    },
+    "production": {
+        "config_id": "production",
+        "node_port": 8080,
+        "hash_secret": "shibboleth",
+        "database": "my-app-db-prod"
+    }
+}
