@@ -9,6 +9,7 @@ import json
 import os
 import re 
 import sqlite3 as sqlite
+import sys
 
 # import requests
 # import pyodata
@@ -29,7 +30,23 @@ def getDBSize(currDB):
 		stats[tblName] = res[0][0]
 	return stats
 
-DBTableSpecTbl = {'event':
+DBTableSpecTbl = {'municipality':
+				  """CREATE TABLE IF NOT EXISTS municipality (
+				  muniID	INTEGER PRIMARY KEY,
+				  name      TEXT,
+				  publicURL TEXT,
+				  client	TEXT
+				  )""",
+				  'body':
+				  """CREATE TABLE IF NOT EXISTS body (
+				  bodyID	INTEGER PRIMARY KEY,
+				  muniID    INTEGER,
+				  name	TEXT,
+				  contactName TEXT,
+				  phone TEXT,
+				  email TEXT
+				  )""",
+				  'event':
 				  """CREATE TABLE IF NOT EXISTS event (
 				  eventID INTEGER PRIMARY KEY,  
 				  bodyID	INTEGER,
@@ -54,6 +71,18 @@ DBTableSpecTbl = {'event':
 				  matterId INTEGER,
 				  eiaModDate TEXT,
 				  link TEXT
+				  )""",
+				  'body2muni':
+				   """CREATE TABLE IF NOT EXISTS body2muni (
+				  b2mIdx INTEGER PRIMARY KEY,
+				  bodyIdx INTEGER,
+				  muniIdx INTEGER
+				  )""",
+				  'event2body':
+				   """CREATE TABLE IF NOT EXISTS event2body (
+				  e2bIdx INTEGER PRIMARY KEY,
+				  eventIdx INTEGER,
+				  bodyIdx INTEGER
 				  )""",
 				  'ei2e':
 				   """CREATE TABLE IF NOT EXISTS ei2e (
@@ -275,30 +304,101 @@ def parseAgenda(atxt):
 	
 SERVICE_ROOT_URL = 'webapi.legistar.com/v1/oakland/'	
 
+# HACK: bootstrap of initially identified Bay Area Legistar clients
+KnownLegistarClients = {'oakland': ['Oakland', 'https://oakland.legistar.com/Calendar.aspx'],
+						'sanmateocounty': ['San Mateo (county)', 'https://sanmateocounty.legistar.com/Calendar.aspx'], 
+						'mountainview': ['Mountain View', 'https://mountainview.legistar.com/Calendar.aspx'], 
+						'cupertino': ['Cupertino', 'https://cupertino.legistar.com/Calendar.aspx'], 
+						'sunnyvaleca': ['Sunnyvale. Milpitas. Palo Alto', 'https://sunnyvaleca.legistar.com/Calendar.aspx']}
+
+def addAllMuni(currDB):
+	curs = currDB.cursor()
+	ninsert = 0
+	for legClient,clientInfo in KnownLegistarClients.items():
+		name,url = KnownLegistarClients[legClient]
+		valList = [name,url,legClient]
+		try:		
+			sql = 'insert into municipality (name,publicURL,client) values(?,?,?)'
+			curs.execute(sql,tuple(valList))
+			ninsert += 1
+		except Exception as e:
+			print('muni', e)
+		
+	currDB.commit()	
+	print('addAllMuni: %d/%d' % (len(KnownLegistarClients),ninsert))
+		
+def addBodies(currDB,legClient):
+
+	curs = currDB.cursor()
+	
+	sql = '''select muniID from municipality where client="%s" ''' % (legClient)
+	curs.execute(sql)
+	res = curs.fetchall()
+	muniIdx = res[0][0]
+	
+	legService = 'webapi.legistar.com/v1/' + legClient + '/'
+	qstr = "Bodies" 
+	fullURL = "http://" + legService + qstr
+	
+	contents = urllib.request.urlopen(fullURL)
+	allBodies = json.loads(contents.read())
+
+	curs = currDB.cursor()
+	ninsert = 0
+	for bodyInfo in allBodies:
+		name = bodyInfo['BodyName']
+		contactName = bodyInfo['BodyContactFullName']
+		phone = bodyInfo['BodyContactPhone']
+		email = bodyInfo['BodyContactEmail']
+		valList = [muniIdx,name,contactName,phone,email]
+		try:		
+			sql = 'insert into body (muniID,name,contactName,phone,email) values(?,?,?,?,?)'
+			curs.execute(sql,tuple(valList))
+			bodyIdx = curs.lastrowid
+			ninsert += 1
+		except Exception as e:
+			print('body', bodyInfo, e)
+
+		try:		
+			sql2 = 'insert into body2muni (bodyIdx,muniIdx) values(?,?)'
+			valList = [bodyIdx,muniIdx]
+			curs.execute(sql2,tuple(valList))
+		except Exception as e:
+			print('body2muni', e)
+	
+	currDB.commit()
+	print('addBodies: %s %d/%d' % (legClient,len(allBodies),ninsert))
+	
 def main():
+
 	dataDir = '/Data/c4a-Data/oakPubSafety/OakCC/'
 	dbPath = dataDir + 'legistar4OO.db'
 	
-# 	eventFile = dataDir + 'pubSafety_events.json'
-# 	eventItemFile = dataDir + 'pubSafety_190423-eventItems.json'	
-# 	eventList =json.load(open(eventFile))
-	
-	initializeDB = False
-	
-	PubSafetyBodyID = '12'
-	CCBodyID = '230'
-	beginDate = '2018-01-01' # '2017-01-01'
-	
+
+	initializeDB = True
+
 	currDB = sqlite.connect(dbPath)
 	
 	if initializeDB:
 		print('initializing DB...')
 		initDB(currDB)
-	
-		PSEventList = getEvents(CCBodyID,beginDate)
-		postEvents(currDB,PSEventList)
-		postAllEventItems(currDB,CCBodyID)
-	
+		
+		addAllMuni(currDB)
+		
+		for legClient in KnownLegistarClients.keys():
+			addBodies(currDB,legClient)
+
+# 		PubSafetyBodyID = '12'
+# 		CCBodyID = '230'
+# 		beginDate = '2018-01-01' # '2017-01-01'
+# 
+# 		PSEventList = getEvents(CCBodyID,beginDate)
+# 		postEvents(currDB,PSEventList)
+# 		postAllEventItems(currDB,CCBodyID)
+# 	
+		
+	sys.exit()
+		
 	print('Database loaded:',getDBSize(currDB))
 	
 	pdfDir = dataDir + 'pdfAttach/'
