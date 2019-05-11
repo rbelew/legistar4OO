@@ -1,0 +1,26 @@
+City,Legistar Link,ServiceRootWorks?,Service root
+Oakland,"https://oakland.legistar,com/Calendar.aspx",TRUE,webapi.legistar.com/v1/oakland/
+Alameda (city),https://alameda.legistar.com/Calendar.aspx,FALSE,
+Alameda (county),https://www.acgov.org/agenda_minutes_app/board/bos_calendar/ag_min.jsp,N/A,
+Fremont,https://fremont.gov/AgendaCenter/City-Council-4,N/A,
+Union City,https://www.unioncity.org/199/City-Meetings-Video,N/A,
+Hayward,https://hayward.legistar.com/Calendar.aspx,FALSE,
+Piedmont,http://www.ci.piedmont.ca.us/citycouncil/?p=4,N/A,
+Emeryville,https://www.ci.emeryville.ca.us/88/Video-Agendas-Reports-Minutes-Archive,N/A,
+Dublin,http://www.ci.dublin.ca.us/82/City-Council-Meetings,N/A,
+Coco County,http://64.166.146.245/agenda_publish.cfm?id=&mt=ALL,N/A,
+Richmond,https://ci.richmond.ca.us/Calendar.aspx,N/A,
+Walnut Creek,http://www.walnut-creek.org/government/public-meeting-agendas-and-videos,N/A,
+Pittsburg,http://www.ci.pittsburg.ca.us/index.aspx?page=410,N/A,
+Concord,https://stream.ci.concord.ca.us/OnBaseAgendaOnline/Meetings/Search?dropid=7,N/A,
+Redwood City,https://www.redwoodcity.org/departments/city-clerk/city-council-meetings-agendas-and-minutes,N/A,
+San Mateo (county),https://sanmateocounty.legistar.com/Calendar.aspx,TRUE,http://webapi.legistar.com/v1/sanmateocounty/events
+Mountain View,https://mountainview.legistar.com/Calendar.aspx,TRUE,http://webapi.legistar.com/v1/mountainview/events
+Cupertino,https://cupertino.legistar.com/Calendar.aspx,TRUE,http://webapi.legistar.com/v1/cupertino/events
+Sunnyvale. Milpitas. Palo Alto,https://sunnyvaleca.legistar.com/Calendar.aspx,TRUE,http://webapi.legistar.com/v1/sunnyvaleca/events
+Marin (county),https://www.marincounty.org/depts/bs/meeting-archive,,
+San Rafael,https://www.cityofsanrafael.org/public-meetings/,,
+Santa Rosa,https://srcity.org/1375/Council-Meeting-Agendas-Minutes-Videos,,
+Vallejo,http://www.ci.vallejo.ca.us/city_hall/departments___divisions/city_manager/city_clerk/city_agendas___videos,,
+Fairfield,https://www.fairfield.ca.gov/gov/city_council/agendas_and_minutes/2019_agendas/default.asp,,
+Solano (county,https://solano.legistar.com/Calendar.aspx,FALSE,
