@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/emails', {useNewUrlParser: true});
 
-const emailSchema = new mongoose.Schema({
+const citySchema = new mongoose.Schema({
   city: String,
-  emails: [String]
+  bodies: [{body: String, emails: [String]}]
 });
 
-const City = mongoose.model('City', emailSchema);
+const City = mongoose.model('City', citySchema);
