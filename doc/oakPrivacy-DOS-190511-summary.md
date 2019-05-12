@@ -43,3 +43,19 @@ sub-committees, offices, ...); the result is
 [this (sqlite) database](https://github.com/rbelew/legistar4OO/blob/master/data/legistar_cityBodies.db),
 and
 [snapshot of the `Body` relation in this CSV file](https://github.com/rbelew/legistar4OO/blob/master/data/bodies.csv).
+
+## Next steps, 
+
+* There is active work on
+  [two branches](https://github.com/rbelew/legistar4OO/tree/email/,
+  https://github.com/rbelew/legistar4OO/tree/emailDB/) attempting to
+  take the resulting meeting data and emailing it to interested
+  parties.  This might be combined with
+  [work in OO's CouncilMatic project that Tweet's meeting information](https://github.com/openoakland/councilmatic/blob/develop/Tweeter.py)
+  it gets (from scraping the public facing Oakland Legistar calendar).
+  
+* All our work has assumed the Legistar API.  "Scraping" and/or other
+  API access to non-Legistar municipalities, other sites, perhaps as
+  OO's [CouncilMatic](http://councilmatic.aws.openoakland.org/pc/)
+  project is currently doing.
+
