@@ -10,10 +10,10 @@ main script is
 
 The project began from an ask from
 [OaklandPrivacy.org](https://oaklandprivacy.org/), to capture
-municipalities' meeting information as, I required by
+municipalities' meeting information, as required by
 [California's Brown Act](https://en.wikipedia.org/wiki/Brown_Act).
 They have special interest in agendas across many Bay Area cities.
-Not Surprisingly, we dug into the situation in Oakland most deeply.
+Not surprisingly, we dug into the situation in Oakland most deeply.
 One of the happiest messages of our day was that *similar tricks can
 be applied to four other municipalities!*
 
