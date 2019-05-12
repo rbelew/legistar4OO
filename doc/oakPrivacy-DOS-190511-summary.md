@@ -5,7 +5,7 @@
 Project [repo is here](https://github.com/rbelew/legistar4OO).  The
 main script is
 [legistar4OO.py](https://github.com/rbelew/legistar4OO/blob/master/src/legistar4OO.py),
-~400 lines of Python.  There are is some test/preliminary data in the
+~400 lines of Python.  There is some test/preliminary data in the
 [data subdirectory](https://github.com/rbelew/legistar4OO/tree/master/data).
 
 The project began from an ask from
