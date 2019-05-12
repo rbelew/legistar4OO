@@ -20,7 +20,9 @@ be applied to four other municipalities!*
 Tracy of OaklandPrivacy provided a list of 25 city and county
 "municipalities" of interest to OaklandPrivacy.  Pretty quickly our
 group was able to identify the public-facing URLs for all cities'
-calendars.  We have captured municipalities' URLs and whether they are
+calendars.  (This was the best part of the day:  all of us adding 
+information to various cells, towards a shared data resource!)
+We have captured municipalities' URLs and whether they are
 Legistar clients (see below) in this
 [spreadsheet of other cities' data](https://github.com/rbelew/legistar4OO/blob/master/data/otherCities.csv).
 
